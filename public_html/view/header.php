@@ -1,0 +1,1 @@
+<div class="header"><a href="/~flucia/" ><img src="/~flucia/banniere.jpg" /></a></div>

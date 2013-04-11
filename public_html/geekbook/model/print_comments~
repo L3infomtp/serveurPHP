@@ -1,0 +1,7 @@
+<?php
+	require_once('connection_db.php');
+	
+	function print_posts(post_id){
+		$db = connect_db();
+		$request = $db->query('SELECT * FROM posts,comments  WHERE posts.id = comments.id_post ORDER BY creation_time DESC;');
+		while($data = $request->fetch()){

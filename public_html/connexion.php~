@@ -1,0 +1,56 @@
+<html>
+<head>
+<script type="text/javascript">
+	function connexion(f){
+   		var xhr_object = null;
+   		if(window.XMLHttpRequest){
+   		  //Pour firefox et autres
+   		  xhr_object = new XMLHttpRequest();
+   		}
+   		else if(window.ActiveXObject){
+     			//Pour Internet Explorer
+     			xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+   		}
+   		else{
+     			alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest...");
+     			return;
+   		}
+   		var username = f.username.value;
+		var password = f.username.value;
+   		xhr_object.open("GET","index.php?username="+username+"&password="+password,true);
+   		xhr_object.onreadystatechange = function(){
+     			if(xhr_object.readyState == 4){
+       				var response = xhr_object.responseText;
+				if(response == "error"){
+				  document.getElementById("err").innerHTML+="Mauvais identifiants";
+				}
+				else{
+				  window.open('menu_principal.php','poker','width=800,height=500,directories=no,menubar=no,status=no,location=no');
+				}
+     			}
+   		}
+   		xhr_object.send(null);  
+ 	}
+</script>
+</head>
+<body>
+	<form name="monform">
+  		 <table>
+			<tr>
+				<td>Nom d'utilisateur : </td>
+				<td><input type="text" name="username" /></td>
+			</tr>
+			<tr>
+				<td>Mot de passe : </td>
+				<td><input type="password" name="password" /></td>
+			</tr>
+                        <tr>
+                                <td><input type="button" value="Se connecter" onclick="javascript:connexion(this.form)"/></td>
+                                <td id="err"></td>
+                        </tr>
+		</table>
+	</form>
+	<div id="test">
+	</div>
+</body>
+</htmL>

@@ -1,0 +1,16 @@
+<?php
+        require_once("connection_db.php");
+
+	$pseudo = $_GET["pseudo"];
+	$db = connect_db();
+	$request = $db->prepare('SELECT username FROM infoclients WHERE username = :username');
+	$request->execute(array(
+		'username' => $pseudo
+		));
+		
+	if($request->rowCount() == 0){
+		echo 'ok';
+	}
+	else{
+		echo 'taken';
+	}

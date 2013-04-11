@@ -1,0 +1,89 @@
+<?php
+/*=======================================================================
+ Nom : serveur.php              Auteur : Lucia Florent
+ Date creation : 21/02/2013     Derniere mise a jour : 21/02/2013
+ Projet : Pokerr en ligne L3 S6
+ ------------------------------------------------------------------------
+ Specification:
+ Ce fichier contient ...
+ ======================================================================*/ 
+
+require_once("class_client.php");
+
+$C_SERVER_IP = 'o13';
+$C_SERVER_PORT = '21345';
+$LOCAL_MACHINE_IP = 'o16';
+$LOCAL_MACHINE_PORT = '12341';
+
+//Creer un socket public pour toutes requetes en provenance d'un client
+if(false === $socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)){
+  echo "Erreur creation socket";
+  exit(1);
+ }
+
+//Bind le socket avec un n° de port
+if(false === socket_bind($socket_public,$LOCAL_MACHINE_IP,$LOCAL_MACHINE_PORT)){
+  echo "Erreur bind du socket";
+  exit(1);
+ }
+
+//Creation de la liste d'attente
+if(false === socket_listen($socket_public,50)){
+  echo "Erreur creation liste d'attente";
+  exit(1);
+ }
+
+$sockets = array($socket_public);//Tableau contenant le socket public et les sockets de chaque client connecte au serveur C++
+$clients = array();//Tableau des instances de clients
+
+while(true){
+
+  $read = $sockets;
+  $write = NULL;
+  $except = NULL;
+
+  //Si il n'y a aucun changement sur les sockets on passe a l'iteration suivante (sinon on met a jour le tableau des sockets)
+  if(socket_select($read,$write,$except,0) < 1){
+    continue;
+  }
+
+  //Si il y a un changement sur le socket public on l'accepte et on recupere le nom d'utilisateur du client
+  if(in_array($socket_public,$read)){
+    $new_client_socket = socket_accept($socket_public);
+    echo $mess = socket_read($new_client_socket,255);
+    echo $username = strtok($mess,'&');
+    echo "\"Mess = ".$mess."\"";
+       
+    //Si l'on ne possede pas de socket pour ce client on lui creer un socket,une instance de client avec son nom d'utilisateur et son mot de passe, puis on le connecte au serveur C++
+    if(!(isset($clients[$username]))){
+      $sockets[] = $new_socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
+      if(socket_connect($new_socket,$C_SERVER_IP,$C_SERVER_PORT) == false){
+	echo 'Erreur conenction au serveur c++';
+	break;
+      }
+      socket_write($new_socket,$mess);
+      $infoclient = socket_read($new_socket,255);
+      
+      
+      $new_client = new Client(strtok($infoclient,'&'),$new_socket,strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'));
+
+      $clients[$username] = $new_client;
+      socket_write($new_client_socket,$clients[$username]);
+      socket_write($new_socket,"TchatRoknus : Salut!");
+      
+    }
+    else{
+      break;
+    }
+  }
+  else{
+    foreach($sockets as $socket){
+      if(in_array($socket,$read)){
+	echo $mess = socket_read($socket,255);   
+      }
+    }
+    }
+ }
+foreach($sockets as $socket_destroy){
+  socket_close($socket_destroy);
+}

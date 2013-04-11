@@ -1,0 +1,19 @@
+<ul class="nav_menu">
+   <li class="connexion">
+       Roknus
+   </li>
+   <li class="connexion">	
+   <script type="text/javascript">
+   function openPopup(){
+   var windowPopup = window.open('connexion.php','poker','width=800,height=500,directories=no,menubar=no,status=no,location=no');
+   if(windowPopup){
+     windowPopup.focus();
+   }
+   else{
+     alert("Veuillez desactiver votre anti-popup pour pouvoir jouer");
+   }
+ }
+   </script>
+   <a href="javascript:openPopup()">Jouer</a>
+   </li>
+</ul>

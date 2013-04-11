@@ -1,0 +1,68 @@
+<?php
+
+/*=======================================================================
+ Nom : class_client.php                Auteur : Lucia Florent
+ Date creation : 21/02/2012     Derniere mise a jour : 21/02/2012
+ Projet : Poker en ligne L3 S6
+ ------------------------------------------------------------------------
+ Specification:
+ Ce fichier contient ...
+ ======================================================================*/ 
+
+class Client{
+  public $username;
+  public $password;
+  public $socket;
+  public $money;
+  public $email;
+  public $dob;
+  public $gender;
+  public $lname;
+  public $fname;
+  public $address;
+  public $city;
+  public $zipcode;
+  public $country;
+  
+  public function __construct($cusername = "",$cpassword = "",$csocket = NULL,$cmoney = 0,$cemail = "", $cdob = "", $cgender = "",){
+    $this->username = $cusername;
+    $this->password = $cpassword;
+    $this->money = $cmoney;
+    $this->socket = $csocket;
+  }
+  public function Client($cusername,$cpassword,$csocket){
+    $this->username = $cusername;
+    $this->password = $cpassword;
+    $this->money = $cmoney;
+    $this->socket = $csocket;
+  }
+
+  public function __toString(){
+    return "| Username : ".$this->getusername()." | Password : ".$this->getpassword()." | Socket : ".$this->getsocket()." | Money : ".$this->getmoney()." |";
+  }
+
+  public function getusername(){
+    return $this->username;
+  }
+  public function getpassword(){
+    return $this->password;
+  }
+  public function getsocket(){
+    return $this->socket;
+  }
+  public function getmoney(){
+    return $this->money;
+  }
+  public function setusername($name){
+    $this->username = $name;
+  }
+  public function setpassword($pass){
+    $this->password = $pass;
+  }
+  public function setsocket($sock){
+    $this->socket = $sock;
+  }
+  public function setmoney($mon){
+    $this->money = $mon;
+  }
+}

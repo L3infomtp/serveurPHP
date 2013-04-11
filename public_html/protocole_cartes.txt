@@ -1,0 +1,14 @@
+1 : trefle
+2 : carreau
+3 : coeur
+4 : pique
+
+1 : as
+2 : 2
+.
+.
+.
+.
+11 : valet
+12 : reine
+13 : roi

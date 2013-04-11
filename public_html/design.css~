@@ -1,0 +1,33 @@
+body{
+	background-color:black;
+	background-image:url(fond_top.png);
+	background-repeat:repeat-x;
+	background-position:top;
+	color:lime;
+}
+
+#entete {
+       margin: 0;
+       padding: 10px 10px 10px 10px;
+       border-bottom: 1px solid #cccccc;
+}
+#contenu {
+       float:left;
+       width: 75%;
+       margin: 0;
+       padding: 0 3% 0 10px;
+}
+#menu {
+      margin: 0 0 0 79%;
+      padding: 0px;
+      background-color: #eeeeee;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+}
+#copyright {
+       clear: both;
+       border: 1px solid #cccccc;
+       padding: 10px 10px 10px 10px;
+       margin-top: 0px;
+	text-align:right;
+}

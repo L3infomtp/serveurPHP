@@ -1,0 +1,19 @@
+<?php 
+
+/*=======================================================================
+ Nom : index.php                Auteur : Lucia Florent
+ Date creation : 21/02/2013     Derniere mise a jour : 21/02/2013
+ Projet : Poker en ligne L3 S6
+ ------------------------------------------------------------------------
+ Specification:
+ Ce fichier contient ...
+ ======================================================================*/ 
+
+$socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
+if(socket_connect($socket_public,'o16','12341') == false){
+  break;
+ }
+$username = $_GET["username"];
+socket_write($socket_public,$username.'&12345&');
+echo socket_read($socket_public,255);
+socket_close($socket_public);

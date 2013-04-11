@@ -1,0 +1,158 @@
+body{
+	background-color: #2c3338;
+	font-size: 14px;
+}
+
+#nav{
+	z-index:10000;
+	position:fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: #2e57a0;
+	border-bottom: 1px outset #2e57a0;
+}
+
+#chat_nav{
+	z-index:10000;
+	position:fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 30px;
+	background-color: #2e57a0;
+	border-top: 1px inset #2e57a0;
+}
+
+#page{
+	background-color: white;
+	border: 2px solid grey;
+	width: 900px;
+	margin:auto;
+	margin-top: 40px;
+	margin-bottom: 55px;
+}
+
+#wrapper{
+	margin:auto;
+	width: 100%;
+}
+
+#info_perso{
+	width:250px;
+	height: 300px;
+}
+
+#amis{
+	width: 250px;
+	height: 300px;
+}
+
+#mur{
+	width: 600px;
+	border-left: solid 1px rgb(200,200,200);
+}
+
+#post_box{
+	display: inline-block;
+	padding: 2px;
+	margin-left: 20px;
+	margin-top: 10px;
+	border-radius: 2px;
+}
+
+#post_border{
+	width: 600px;
+	height: 130px;
+	border: solid 1px rgb(200,200,200);
+	border-radius: 2px;
+	border-collapse: collapse;
+}
+
+#submit_post{
+	background-color: rgb(240,240,255);
+	height: 28px;
+}
+#tabs, #tabs div{
+	margin-bottom: 10px;
+	margin-rigth: 10xp;
+	padding: 0px;
+	border: none;
+}
+
+textarea{
+	resize:none;
+	border: none;
+	overflow:hidden;
+}
+
+#img_input_title{
+	color: rgb(100,100,100);
+}
+
+.post{
+	border-top: 1px solid rgb(200,200,200);
+}
+
+.post td > img{
+	border: 1px solid rgb(200,200,200);
+}
+
+.post_time{
+	color: rgb(150,150,150);
+	font-size: 12px;
+}
+
+.post > table{
+	margin-top:5px;
+	border-spacing: 5px;
+}
+
+.post > img{
+	height: 45px;
+	width: 45px;
+}
+
+.post .post_user_picture{
+	vertical-align:top;
+}
+
+.picture_description{
+	border-radius: 2px;
+	border: 1px solid rgb(100,100,100);
+}
+
+.picture_title{
+	text-align: center;
+	text-decoration:underline;
+	font-size: 12px;
+	color: rgb(100,100,100);
+}
+
+.post_picture{
+	max-width: 600px;
+	max-height: 300px;
+}
+
+.user_name{
+	color: #2e57a0;
+}
+
+.comments_button{
+	color: rgb(150,150,200)
+}
+
+.comments_button:hover{
+	cursor: pointer;
+	text-decoration:underline;
+}
+
+.comments{
+	display:none;
+	width: 400px;
+}
+
+.comments tr{
+	background-color:rgb(240,240,255);
+}
