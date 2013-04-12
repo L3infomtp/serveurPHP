@@ -138,9 +138,9 @@ function connexionClient(){
 							    joueurs[place][2] = parseFloat(res[i+4]); //Mise
 							    joueurs[place][3] = res[i+5];
 							    if(joueurs[place][3] == "t"){
-							      joueurs[place][2] = "FOLD";
+							      joueurs[place][2] = "COUCHER";
 							    }
-							    $('#player'+place).html('<div id="player_status"></div><table><tr><td id="pseudo" colspan="2"><strong>'+joueurs[place][0]+'</strong></td></tr><tr><td><img src="icone_money.png"/><span id="jetons">'+joueurs[place][1]+'</span></td><td>Mise<br/><span id="mise">'+joueurs[place][2]+'</span></td></tr><tr><td id="timer" colspan="2"></td></tr></table>');
+							    $('#player'+place).html('<div id="player_status_bar"><span id="player_status"></span><span id="timer"></span></div><table><tr><td id="pseudo"><strong>'+joueurs[place][0]+' : </strong></td><td><img src="icone_money.png"/><span id="jetons">'+joueurs[place][1]+'</span></td></tr><tr><td colspan="2"><span id="mise">'+joueurs[place][2]+'</span></td></tr></table>');
 							    i= i+6
 							  }
 							  if(res[i] == "Miser"){
@@ -349,7 +349,7 @@ function ajax_mise(mise){
 								       
 									<?php player_block(9,$nb_j_max);?>
 									
-									<td><div class="pot"></div></td>
+									<td><div class="pot_div"><span>Pot</span><br/><span class="pot"></span></td>
 									<td colspan="3" class="board">
                                                                               <table id="board">
 									             <tr>

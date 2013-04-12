@@ -10,7 +10,7 @@
 
 require_once("class_client.php");
 
-$C_SERVER_IP = 'c9';
+$C_SERVER_IP = 'c2';
 $C_SERVER_PORT = '21345';
 $LOCAL_MACHINE_IP = 'c10';
 $LOCAL_MACHINE_PORT = '12349';
@@ -21,7 +21,7 @@ if(false === $socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP)){
   exit(1);
  }
 
-//Bind le socket avec un n¬∞ de port
+//Bind le socket avec un nÅ∞ de port
 if(false === socket_bind($socket_public,$LOCAL_MACHINE_IP,$LOCAL_MACHINE_PORT)){
   echo "Erreur bind du socket\n";
   exit(1);
@@ -46,7 +46,7 @@ while(true){
 		continue;
 	}
 
-	//Si il y a un changement sur le socket public ( cot√© client ) on l'accepte et on recupere le nom d'utilisateur du client
+	//Si il y a un changement sur le socket public ( cotÅÈ client ) on l'accepte et on recupere le nom d'utilisateur du client
 	if(in_array($socket_public,$read)){
   
 		$new_client_socket = socket_accept($socket_public);
@@ -63,14 +63,14 @@ while(true){
 			socket_write($new_socket,$mess);
 			$infoclient = socket_read($new_socket,2047);
 
-			//Si la connection du client est accept√© par le serveur C++ alors on lui cr√©er une instance de classe client
+			//Si la connection du client est acceptÅÈ par le serveur C++ alors on lui crÅÈer une instance de classe client
 			if($infoclient != false){
 				$sockets[$username] = $new_socket;
 				$password = strtok('&');
 				$new_client = new Client(strtok($infoclient,'&'),$password,$new_socket,strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'),strtok('&'));
 
 				$clients[$username] = $new_client;
-				echo "Client cr√©e\n";
+				echo "Client crÅÈe\n";
 				$table_info = "";
 				while(strtok('&') == "TInfo"){
 				  $nom_table = strtok('&');
@@ -109,7 +109,7 @@ while(true){
 				  $clients[$username]->setsocket($new_socket);
 				  socket_write($new_client_socket,$clients[$username]->gettable_info());
 
-				  echo 'Connexion de '.$username.'... Client d√©ja connect√©... Reconnexion au menu principal';
+				  echo 'Connexion de '.$username.'... Client dÅÈja connectÅÈ... Reconnexion au menu principal';
 				}
 				else{
 					echo "Nouvelle requete : ".$requete."\n";
@@ -118,12 +118,12 @@ while(true){
 						{
 						        $num_port = strtok('&');
 							socket_close($sockets[$username]);
-							echo 'Deconnexion de '.$username.' au serveur principal ... Connexion √† la table '.$num_port." ...\n";
+							echo 'Deconnexion de '.$username.' au serveur principal ... Connexion Å‡ la table '.$num_port." ...\n";
 							$sockets[$username] = $new_socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 							$clients[$username]->setsocket($new_socket);
 							socket_connect($new_socket,$C_SERVER_IP,$num_port);
 							socket_write($new_socket,$username);
-							echo "Connexion √† la table !\n";
+							echo "Connexion Å‡ la table !\n";
 							break;
 						}
 						case "jouer":

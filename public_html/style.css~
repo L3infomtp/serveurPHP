@@ -223,12 +223,13 @@ body{
 	height: 110px;
 }
 
-.table .pot{
+.table .pot_div{
+	margin-left: 20px;
 	height:50px;
-	width:70px;
+	width: 70px;
 }
 
-#player_status{
+#player_status_bar{
 	background-color: rgb(10,15,15);
 	height: 25px;
 	width: 100px;
@@ -237,8 +238,13 @@ body{
 	border-bottom: 2px inset rgb(30,35,35);
 }
 
+#timer{
+	vertical-align:middle;
+	font-size: 20px;
+	height:25px;
+}
+
 #pseudo{
-	width: 110px;
 	font-size:16px;
 }
 

@@ -112,7 +112,6 @@ while(true){
 				  echo 'Connexion de '.$username.'... Client déja connecté... Reconnexion au menu principal';
 				}
 				else{
-					echo "Nouvelle requete : ".$requete."\n";
 					switch($requete){
 						case "connect_table":
 						{
@@ -204,10 +203,12 @@ while(true){
 								$pot = strtok('&');
 								$pot = number_format($pot,2,'.',' ');
 								$dealer = strtok('&');
+								$placePB = strtok('&');
+								$placeGB = strtok('&');
 								$miseMin = strtok('&');
 								$miseMin = number_format($miseMin,2,'.',' ');
 								$next = strtok('&');
-								$clients[$username]->setinfo_table('InfoT&'.$dealer.'&'.$pot.'&'.$miseMin.'&'.$next.'&');		
+								$clients[$username]->setinfo_table('InfoT&'.$pot.'&'.$dealer.'&'.$placePB.'&'.$placeGB.'&'.$miseMin.'&'.$next.'&');		
 								echo "add info table\n";
 								break;
 							}
