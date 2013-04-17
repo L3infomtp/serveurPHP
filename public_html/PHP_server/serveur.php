@@ -1,7 +1,7 @@
 <?php
 /*=======================================================================
  Nom : serveur.php              Auteur : Lucia Florent
- Date creation : 21/02/2013     Derniere mise a jour : 21/02/2013
+ Date creation : 21/02/2013     Derniere mise a jour : 15/04/2013
  Projet : Poker en ligne L3 S6
  ------------------------------------------------------------------------
  Specification:
@@ -10,9 +10,9 @@
 
 require_once("class_client.php");
 
-$C_SERVER_IP = 'c9';
+$C_SERVER_IP = 'm6';
 $C_SERVER_PORT = '21345';
-$LOCAL_MACHINE_IP = 'c10';
+$LOCAL_MACHINE_IP = 'm7';
 $LOCAL_MACHINE_PORT = '12349';
 
 //Creer un socket public pour toutes requetes en provenance d'un client

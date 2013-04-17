@@ -10,7 +10,7 @@ session_start();
  Ce fichier contient ...
  =======================================================================*/ 
 
-$LOCAL_MACHINE_IP = 'c10';
+$LOCAL_MACHINE_IP = 'm7';
 $LOCAL_MACHINE_PORT = 12349;
 
 $place = $_GET["place"];

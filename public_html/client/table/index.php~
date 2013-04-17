@@ -44,7 +44,7 @@ var mise_min = 0.0;
 var mise_suivre = 0.0;
 var suivant = -1;
 var board = 1;
-var time = 21;
+var time = 20;
 var interval;
 
 var joueurs = new Array();
@@ -126,10 +126,12 @@ function connexionClient(){
 							    pot = parseFloat(res[i+1]);
 							    $('.pot').html(pot);
 							    dealer = parseInt(res[i+2]);
-							    mise_min = parseFloat(res[i+3]);
-							    suivant = parseInt(res[i+4]);
+							    placePB = parseInt(res[i+3]);
+							    placeGB = parseInt(res[i+4]);
+							    mise_min = parseFloat(res[i+5]);
+							    suivant = parseInt(res[i+6]);
 							    
-							    i = 5; // On déplace le curseur pour la boucle qui suit							    
+							    i = i+7; // On déplace le curseur pour la boucle qui suit							    
 							  } 
 							  while(res[i] == "NewJo"){
 							    place = res[i+1];
@@ -140,14 +142,25 @@ function connexionClient(){
 							    if(joueurs[place][3] == "t"){
 							      joueurs[place][2] = "COUCHER";
 							    }
-							    $('#player'+place).html('<div id="player_status_bar"><span id="player_status"></span><span id="timer"></span></div><table><tr><td id="pseudo"><strong>'+joueurs[place][0]+' : </strong></td><td><img src="icone_money.png"/><span id="jetons">'+joueurs[place][1]+'</span></td></tr><tr><td colspan="2"><span id="mise">'+joueurs[place][2]+'</span></td></tr></table>');
+							    $('#player'+place).html('<table><tr><td id="player_status_bar"><span id="player_status"></span></td><td id="timer_box"><span id="timer"></span></td></tr><tr><td colspan="2" id="pseudo"><strong>'+joueurs[place][0]+' : </strong><img src="icone_money.png"/><span id="jetons">'+joueurs[place][1]+'</span></td></tr><tr><td colspan="2"><span id="mise">'+joueurs[place][2]+'</span></td></tr></table>');
+
+							    if( dealer == place){
+							      $('<img src="couronne.png" />').appendTo('#player'+dealer+' #player_status');
+							    }
+							    if( placePB == place){
+							      $('<img src="pb.png" />').appendTo('#player'+placePB+' #player_status');				    
+							    }
+							    if( placeGB == place){
+							      $('<img src="gb.png" />').appendTo('#player'+placeGB+' #player_status');
+							    }
+
 							    i= i+6
 							  }
 							  if(res[i] == "Miser"){
 
 							    clearInterval(interval);
 							    $("#player"+suivant+" #timer").html("");
-							    time = 21;
+							    time = 20;
 
 							    var place = parseInt(res[i+1]);
 							    var mise = parseFloat(res[i+2]);							  
@@ -182,6 +195,10 @@ function connexionClient(){
 							    i = i+4;
 							  }
 							  if(res[i] == "Deale"){
+							    clearInterval(interval);
+							    $("#player"+suivant+" #timer").html("");
+							    time = 20;
+
 							    $('#player'+dealer+' #player_status').html('');
 							    $('#player'+placeGB+' #player_status').html('');
 							    $('#player'+placePB+' #player_status').html('');
@@ -219,9 +236,32 @@ function connexionClient(){
 							    $('.pot').html(pot);
 							    
 							    mise_suivre = joueurs[placeGB][2];
+
+							    $("#player"+placePB+" #timer").html(time);
+							    interval = setInterval(function(interval){
+										     $("#player"+placePB+" #timer").html(time-1);
+										     time= time-1;
+										     if(time == 0){
+										       clearInterval(interval);
+										       $("#player"+placePB+" #timer").html("");
+										       time = 21;
+										     }
+										   },1000);
+
 							    i = i+5;							    
 							  }
 							  if(res[i] == "Carte"){
+							    //Si le joueur se reconnecte on recupere sa place
+							    if(ma_place == -1){
+							      ma_place = res[i+1];
+							      var j;
+							      //Si il reçoit ses cartes alors il est joueur et on désacive la possibilité de s'assoir
+							      for(j=0;j<10;j++){
+								if($('#player'+j).html() == '<strong>Choisissez votre place.</strong>'){
+								  $('#player'+j).html('');
+								}
+							      }
+							    }
 							    carte1 = res[i+2];
 							    $("#carte1").attr('src','cards/'+carte1+'.png');
 							    carte2 = res[i+3];
@@ -232,7 +272,7 @@ function connexionClient(){
 
 							    clearInterval(interval);
 							    $("#player"+suivant+" #timer").html("");
-							    time = 21;
+							    time = 20;
 
 							    $('#board'+board).attr('src','cards/'+res[i+1]+'.png');
 							    board = board+1;
@@ -267,51 +307,58 @@ function connexionClient(){
 		<!--
 
 		function miser(mise){
-  if(mise == 0){
-    ajax_mise(mise);
-  }
-  else if(mise == 1){
-    ajax_mise(Math.round((mise_suivre - joueurs[ma_place][2])*100)/100);
-  }
-  else if(mise == 2){
-    if($("#relance_div").css('display') == "none"){
-      $('#valeur_relance').html(1);
-      $("#slider").slider({
-	min : 1,
-	    max : joueurs[ma_place][1],
-	    value : 1,
-	    step : 0.01,
-	    slide : function (event){
-	    $("#valeur_relance").html($(this).slider("value"));
-			  },
-	    stop : function (event){
-	    $("#valeur_relance").html($(this).slider("value"));
-			  }
-	});
-      $("#relance_div").slideToggle();
-    }
-    else{
-      ajax_mise($("#slider").slider("value"));
-      $("#relance_div").slideToggle();      
-    }
-  }
-  else if(mise == -1){
-    ajax_mise(mise);
-  }
-}
+                    if(mise == 0){
+		      ajax_mise(mise);
+		    }
+		    else if(mise == 1){
+		      ajax_mise(Math.round((mise_suivre - joueurs[ma_place][2])*100)/100);
+		    }
+		    else if(mise == 2){
+		      var min;
+		      if((mise_suivre - joueurs[ma_place][2]) > mise_min){
+			min = (mise_suivre - joueurs[ma_place][2]);
+		      }
+		      else{
+			min = mise_min;
+		      }
+		      if($("#relance_div").css('display') == "none"){
+			$('#valeur_relance').html(1);
+			$("#slider").slider({
+			      min : min,
+			      max : joueurs[ma_place][1],
+			      value : min,
+			      step : 0.01,
+			      slide : function (event){
+			      $("#valeur_relance").html($(this).slider("value"));
+			    },
+			      stop : function (event){
+			      $("#valeur_relance").html($(this).slider("value"));
+			    }
+			  });
+			$("#relance_div").slideToggle();
+		      }
+		      else{
+			ajax_mise($("#slider").slider("value"));
+			$("#relance_div").slideToggle();      
+		      }
+		    }
+		    else if(mise == -1){
+		      ajax_mise(mise);
+		    }
+                }
 
-function ajax_mise(mise){
-  mise = mise;
-  var data = { miser : mise};
-  $.ajax({
-    url : "/~flucia/client/table/miser.php",
- 	data : data,
-	complete : function(xhr,result){
-	if(result != "success") return; 
-	var response = xhr.responseText;
-      }
-    });
-}
+                function ajax_mise(mise){
+		  mise = mise;
+		  var data = { miser : mise};
+		  $.ajax({
+		    url : "/~flucia/client/table/miser.php",
+			data : data,
+			complete : function(xhr,result){
+			if(result != "success") return; 
+			var response = xhr.responseText;
+		      }
+		    });
+		}
 
 
 		//-->
@@ -324,7 +371,7 @@ function ajax_mise(mise){
 			$(document).ready(function(){
 				setInterval(function(){
 					refresh();
-				},2000);
+				},300);
 			});
 
 		//-->
