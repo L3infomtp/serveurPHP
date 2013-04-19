@@ -10,14 +10,15 @@ session_start();
  Ce fichier contient ...
  =======================================================================*/ 
 
-$LOCAL_MACHINE_IP = 'm7';
+$LOCAL_MACHINE = $_SESSION["server_hostname"];
 $LOCAL_MACHINE_PORT = 12349;
 
 $place = $_GET["place"];
+$cave = $_GET["cave"];
 
 $socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
-if(socket_connect($socket_public,$LOCAL_MACHINE_IP,$LOCAL_MACHINE_PORT) == false){
+if(socket_connect($socket_public,$LOCAL_MACHINE,$LOCAL_MACHINE_PORT) == false){
   break;
  }
-socket_write($socket_public,$_SESSION["username"]."&jouer&".$place."&10&");
+socket_write($socket_public,$_SESSION["username"]."&jouer&".$place."&".$cave."&");
 socket_close($socket_public);

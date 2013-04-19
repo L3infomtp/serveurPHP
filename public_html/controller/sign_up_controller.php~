@@ -42,7 +42,7 @@
 			
 			$password = sha1($password);
 			
-			$signup = insert_new_client($username,$password,10000,$email,$year,$month,$day,$gender,$firstname,$lastname,$address,$address2,$city,$country,$zipcode);
+			$signup = insert_new_client($username,$password,$email,$year,$month,$day,$gender,$firstname,$lastname,$address,$address2,$city,$country,$zipcode);
 			
 			if($signup){	
 				header('Location:/~flucia/');

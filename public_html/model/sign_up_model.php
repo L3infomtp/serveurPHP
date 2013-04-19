@@ -1,12 +1,13 @@
 <?php
 	
-	function insert_new_client($username,$password,$email,$year,$month,$day,$gender,$firstname,$lastname,$address,$address2,$city,$country,$zipcode){
+function insert_new_client($username,$password,$money,$email,$year,$month,$day,$gender,$firstname,$lastname,$address,$address2,$city,$country,$zipcode){
 		$db = connect_db();
-		$request = $db->prepare('INSERT INTO infoclients (Username ,Password ,Email ,DOB ,Gender ,LName ,FName ,Address ,City ,Zipcode ,Country) 
-					VALUES(:username,:password,:email,:dob,:gender,:lname,:fname,:address,:city,:zipcode,:country)');
+		$request = $db->prepare('INSERT INTO infoclients (Username ,Password,money  ,Email ,DOB ,Gender ,LName ,FName ,Address ,City ,Zipcode ,Country) 
+					VALUES(:username,:password,:money,:email,:dob,:gender,:lname,:fname,:address,:city,:zipcode,:country)');
 		$signup = $request->execute(array(
 			'username'=>$username,
-			'password'=>$password,			
+			'password'=>$password,
+			'money'=>$money,
 			'email'=>$email,
 			'dob'=>$year.'-'.$month.'-'.$day,
 			'gender'=>$gender,

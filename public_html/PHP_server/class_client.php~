@@ -25,6 +25,9 @@ class Client{
   private $zipcode;
   private $country;
 
+  //information relative au menu principal
+  private $table_info;
+
   //informations relative à la table
   private $socket_table;
   private $info_joueurs;
@@ -139,6 +142,9 @@ class Client{
   public function getmise(){
     return $this->mise;
   }
+  public function gettable_info(){
+    return $this->table_info;
+  }
 
   public function setusername($name){
     $this->username = $name;
@@ -199,6 +205,9 @@ class Client{
   }
   public function setmise($mise){
     $this->mise = $mise;
+  }
+  public function settable_info($table){
+    $this->table_info = $table;
   }
 
   public function add_info_joueurs($mess){

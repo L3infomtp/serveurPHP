@@ -10,9 +10,9 @@
 
 require_once("class_client.php");
 
-$C_SERVER_IP = 'm6';
+$C_SERVER_IP = 'o18';
 $C_SERVER_PORT = '21345';
-$LOCAL_MACHINE_IP = 'm7';
+$LOCAL_MACHINE_IP = 'o17';
 $LOCAL_MACHINE_PORT = '12349';
 
 //Creer un socket public pour toutes requetes en provenance d'un client
@@ -51,8 +51,10 @@ while(true){
   
 		$new_client_socket = socket_accept($socket_public);
 		$mess = socket_read($new_client_socket,255);
-	
-		echo "\nMess = ".$mess."\n";
+		
+		if(!strstr($mess,'refresh')){ // A enlever !
+		  echo "\nMess = ".$mess."\n";
+		}
 
 		$username = strtok($mess,'&');
        
@@ -78,6 +80,7 @@ while(true){
 				  $nbJ = strtok('&');
 				  $nbJMax = strtok('&');
 				  $miseMin = strtok('&');
+				  $miseMin /= 100;
 				  $table_info .= "TInfo&".$nom_table.'&'.$num_port.'&'.$nbJ.'&'.$nbJMax.'&'.$miseMin.'&';
 				}
 				$clients[$username]->settable_info($table_info);
@@ -96,17 +99,12 @@ while(true){
 
 				if($requete == $clients[$username]->getpassword()){
 
-				  if(isset($sockets[$username])){
-
-				    socket_close($sockets[$username]);
-				    $clients[$username]->setsocket('');
-				  }
-
-				  $new_socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);	      
-				  socket_connect($new_socket,$C_SERVER_IP,$C_SERVER_PORT);
-
-				  socket_write($new_socket,$username.'&'.$clients[$username]->getpassword().'&');
+				  socket_close($sockets[$username]);
+				  $sockets[$username] = $new_socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 				  $clients[$username]->setsocket($new_socket);
+				  socket_connect($new_socket,$C_SERVER_IP,$C_SERVER_PORT);
+				  socket_write($new_socket,$username.'&'.$clients[$username]->getpassword().'&');
+
 				  socket_write($new_client_socket,$clients[$username]->gettable_info());
 
 				  echo 'Connexion de '.$username.'... Client déja connecté... Reconnexion au menu principal';
@@ -129,6 +127,7 @@ while(true){
 						{
 							$place = strtok('&');
 							$jeton = strtok('&');
+							$jeton *= 100;							
 							socket_write($clients[$username]->getsocket(),"Jouer&".$place."&".$jeton."&");
 							echo "Choix du siege !\n";
 							break;
@@ -141,7 +140,8 @@ while(true){
 							$infoC = $clients[$username]->getcartes();
 							$infoM = $clients[$username]->getmise();
 							$infoB = $clients[$username]->getboard();
-							$infoT .= $infoJ .= $infoM .= $infoD .= $infoC .= $infoB;
+							$infoG = $clients[$username]->getgagnant();
+							$infoT .= $infoJ .= $infoM .= $infoD .= $infoC .= $infoB .= $infoG;
 							if($infoT !== ""){
 								echo $infoT."\n";
 								socket_write($new_client_socket,$infoT);
@@ -151,6 +151,7 @@ while(true){
 								$clients[$username]->setcartes("");
 								$clients[$username]->setmise("");
 								$clients[$username]->setboard("");
+								$clients[$username]->setgagnant("");
 							}
 							else{					  
 								socket_write($new_client_socket,"RAS");
@@ -159,9 +160,8 @@ while(true){
 						}
 				             	case "miser":
 						{
-						        $mise = strtok('&');
-							$mise = number_format($mise,2,'.',' ');	
-							echo $mise."\n";
+						        $mise = strtok('&');	
+							$mise *= 100;						     
 							socket_write($clients[$username]->getsocket(),'Miser&'.$mise.'&');
 							break;
 						}
@@ -201,12 +201,12 @@ while(true){
 					                case "InfoT":
 							{
 								$pot = strtok('&');
-								$pot = number_format($pot,2,'.',' ');
+								$pot /= 100;
 								$dealer = strtok('&');
 								$placePB = strtok('&');
 								$placeGB = strtok('&');
-								$miseMin = strtok('&');
-								$miseMin = number_format($miseMin,2,'.',' ');
+								$miseMin = strtok('&');	
+								$miseMin /= 100;
 								$next = strtok('&');
 								$clients[$username]->setinfo_table('InfoT&'.$pot.'&'.$dealer.'&'.$placePB.'&'.$placeGB.'&'.$miseMin.'&'.$next.'&');		
 								echo "add info table\n";
@@ -217,9 +217,9 @@ while(true){
 								$place = strtok('&');
 								$pseudo = strtok('&');
 								$jetons = strtok('&');
-								$jetons = number_format($jetons,2,'.',' ');
+								$jetons /= 100;
 								$mise = strtok('&');
-								$mise = number_format($mise,2,'.',' ');
+								$mise /= 100;
 								$etat = strtok('&');
 								$clients[$username]->add_info_joueurs('NewJo&'.$place.'&'.$pseudo.'&'.$jetons.'&'.$mise.'&'.$etat.'&');
 								echo "add info joueurs\n";
@@ -248,7 +248,7 @@ while(true){
 					                {
 					                        $place = strtok('&');
 								$mise = strtok('&');
-								$mise = number_format($mise,2,'.',' ');
+								$mise /= 100;
 								$suivant = strtok('&');
 								$clients[$username]->add_mise('Miser&'.$place.'&'.$mise.'&'.$suivant.'&');
 								break;
@@ -259,6 +259,14 @@ while(true){
 								$suivant = strtok('&');
 								$clients[$username]->add_carte_board('Milie&'.$valeur.'&'.$suivant.'&');
 								break;
+							}
+				                        case "Gagna":
+					                {
+							        $place = strtok('&');
+							        $jetons = strtok('&');
+							        $jetons /= 100;
+						         	$clients[$username]->add_gagnant('Gagna&'.$place.'&'.$jetons.'&');
+							        break;
 							}
 					                default:
 							{

@@ -10,9 +10,9 @@
 
 require_once("class_client.php");
 
-$C_SERVER_IP = 'f3';
+$C_SERVER_IP = 'o18';
 $C_SERVER_PORT = '21345';
-$LOCAL_MACHINE_IP = 'f2';
+$LOCAL_MACHINE_IP = 'o17';
 $LOCAL_MACHINE_PORT = '12349';
 
 //Creer un socket public pour toutes requetes en provenance d'un client
@@ -78,6 +78,7 @@ while(true){
 				  $nbJ = strtok('&');
 				  $nbJMax = strtok('&');
 				  $miseMin = strtok('&');
+				  $miseMin /= 100;
 				  $table_info .= "TInfo&".$nom_table.'&'.$num_port.'&'.$nbJ.'&'.$nbJMax.'&'.$miseMin.'&';
 				}
 				$clients[$username]->settable_info($table_info);
@@ -129,6 +130,7 @@ while(true){
 						{
 							$place = strtok('&');
 							$jeton = strtok('&');
+							$jeton *= 100;							
 							socket_write($clients[$username]->getsocket(),"Jouer&".$place."&".$jeton."&");
 							echo "Choix du siege !\n";
 							break;
@@ -159,9 +161,8 @@ while(true){
 						}
 				             	case "miser":
 						{
-						        $mise = strtok('&');
-							$mise = number_format($mise,2,'.',' ');	
-							echo $mise."\n";
+						        $mise = strtok('&');	
+							$mise *= 100;						     
 							socket_write($clients[$username]->getsocket(),'Miser&'.$mise.'&');
 							break;
 						}
@@ -201,12 +202,12 @@ while(true){
 					                case "InfoT":
 							{
 								$pot = strtok('&');
-								$pot = number_format($pot,2,'.',' ');
+								$pot /= 100;
 								$dealer = strtok('&');
 								$placePB = strtok('&');
 								$placeGB = strtok('&');
-								$miseMin = strtok('&');
-								$miseMin = number_format($miseMin,2,'.',' ');
+								$miseMin = strtok('&');	
+								$miseMin /= 100;
 								$next = strtok('&');
 								$clients[$username]->setinfo_table('InfoT&'.$pot.'&'.$dealer.'&'.$placePB.'&'.$placeGB.'&'.$miseMin.'&'.$next.'&');		
 								echo "add info table\n";
@@ -217,9 +218,9 @@ while(true){
 								$place = strtok('&');
 								$pseudo = strtok('&');
 								$jetons = strtok('&');
-								$jetons = number_format($jetons,2,'.',' ');
+								$jetons /= 100;
 								$mise = strtok('&');
-								$mise = number_format($mise,2,'.',' ');
+								$mise /= 100;
 								$etat = strtok('&');
 								$clients[$username]->add_info_joueurs('NewJo&'.$place.'&'.$pseudo.'&'.$jetons.'&'.$mise.'&'.$etat.'&');
 								echo "add info joueurs\n";
@@ -248,7 +249,7 @@ while(true){
 					                {
 					                        $place = strtok('&');
 								$mise = strtok('&');
-								$mise = number_format($mise,2,'.',' ');
+								$mise /= 100;
 								$suivant = strtok('&');
 								$clients[$username]->add_mise('Miser&'.$place.'&'.$mise.'&'.$suivant.'&');
 								break;

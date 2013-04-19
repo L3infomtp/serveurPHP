@@ -11,11 +11,11 @@ require_once("../../model/connection_db.php");
  Ce fichier contient ...
  ======================================================================*/ 
 
-$LOCAL_MACHINE_IP = 'm7';
+$LOCAL_MACHINE = 'o17';
 $LOCAL_MACHINE_PORT = 12349;
 
 $socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
-if(socket_connect($socket_public,$LOCAL_MACHINE_IP,$LOCAL_MACHINE_PORT) == false){
+if(socket_connect($socket_public,$LOCAL_MACHINE,$LOCAL_MACHINE_PORT) == false){
 	break;
 }
 if(isset($_SESSION["username"])){
@@ -47,13 +47,14 @@ if($res != 'connection_denied'){
              <td>';
 	  $nb_j_max = strtok('&');
 	  $tables .= $nb_j_max.'</td>
-             <td>'.strtok('&').'</td>
+             <td>'.number_format(strtok('&'),2,'.',' ').'</td>
              <td><input type="button" value="Rejoindre" onclick="javascript:rejoindreTable('.$num_port.','.$nb_j_max.')"/></td>
           </tr>
          ';
 	  $mess = strtok('&');
 	}	
 	$_SESSION["tables"] = $tables;
+	$_SESSION["server_hostname"] = $LOCAL_MACHINE;
 	echo 'connection_accepted';
 	
 }
