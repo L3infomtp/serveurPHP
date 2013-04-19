@@ -275,9 +275,8 @@
 								if(res[i] == "Milie"){								  
 								        clearInterval(interval);
 								  	$("#player"+suivant+" #timer").html("");
-									time = 20;
-				   
-									$("<span>"+board+"</span>").appendTo('.chat');
+									time = 20;				   
+								  
 									$('#board'+board).attr('src','cards/'+res[i+1]+'.png');
 									board = board+1;
 									suivant = res[i+2];
@@ -295,15 +294,15 @@
 									i = i+2;
 								}
 								if(res[i] == "Gagna"){
-								  var place_gagnant = res[i+1];
-								  var new_jetons = res[i+2];
+							        	var place_gagnant = res[i+1];
+								        var new_jetons = parseFloat(res[i+2]);
 								  
-								  joueurs[place_gagnant][1] = new_jetons;
-								  $('#player'+place_gagnant+' #jetons').html(joueurs[place_gagnant][1]);
-								  i = i+3;
+								        joueurs[place_gagnant][1] = new_jetons;
+								        $('#player'+place_gagnant+' #jetons').html(joueurs[place_gagnant][1]);
+								        i = i+3;
 								}
 								else{
-									i = i+1;
+								        i = i+1;
 								}
 							}
 						}
