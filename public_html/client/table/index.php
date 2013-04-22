@@ -7,8 +7,8 @@
 	}
 
 	function player_block($place,$nb_j_max){
-		echo '<td><div id="player'.$place.'" onclick="javascript:choixPlace('.$place.')" style="vertical-align:center;">';
-		if($place < $nb_j_max) echo '<strong>Choisissez votre place.</strong>';
+		echo '<td><div id="player'.$place.'" style="vertical-align:center;">';
+		if($place < $nb_j_max) echo '<div onclick="javascript:choixPlace('.$place.')"><strong>Choisissez votre place.</strong></div>';
 		echo '</div></td>';   
 	}
 ?>
@@ -109,9 +109,7 @@
 							if($('#player'+i).html() == '<strong>Choisissez votre place.</strong>'){
 								$('#player'+i).html('');
 							}
-						}			     
-						$('.select').empty();
-						$('.select').html('<table><tr><td><input type="button" value="Parole" onclick="javascript:miser(0)"/></td><td><input type="button" value="Suivre" onclick="javascript:miser(1)"/></td><td><input type="button" value="Relancer" onclick="javascript:miser(2)"/></td><td><input type="button" value="Coucher" onclick="javascript:miser(-1)"/></td></tr><tr><td><a href="../menu_principal">Quitter la table</a></td></tr></table><div id="relance_div" style="display:none"><div id="slider"></div><div id="valeur_relance"></div></div>');
+						}
 					}
 				});		       
 		    }	
@@ -156,6 +154,11 @@
 									}
 									if( placeGB == place){
 										$('<img src="gb.png" height="20" width="30" />').appendTo('#player'+placeGB+' #player_status');
+									}
+									if( joueurs[place][0] == <?php echo '"'.$_SESSION["username"].'"'; ?> ){
+									        			     
+									        $('.select').empty();
+										$('.select').html('<table><tr><td><input type="button" value="Parole" onclick="javascript:miser(0)"/></td><td><input type="button" value="Suivre" onclick="javascript:miser(1)"/></td><td><input type="button" value="Relancer" onclick="javascript:miser(2)"/></td><td><input type="button" value="Coucher" onclick="javascript:miser(-1)"/></td></tr><tr><td><a href="../menu_principal">Quitter la table</a></td></tr></table><div id="relance_div" style="display:none"><div id="slider"></div><div id="valeur_relance"></div></div>');
 									}
 							   
 									i= i+6

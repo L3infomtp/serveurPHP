@@ -11,7 +11,7 @@ require_once("../../model/connection_db.php");
  Ce fichier contient ...
  ======================================================================*/ 
 
-$LOCAL_MACHINE = 'o17';
+$LOCAL_MACHINE = 'p1';
 $LOCAL_MACHINE_PORT = 12349;
 
 $socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);

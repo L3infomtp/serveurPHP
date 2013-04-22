@@ -10,9 +10,9 @@
 
 require_once("class_client.php");
 
-$C_SERVER_IP = 'o18';
+$C_SERVER_IP = 'p2';
 $C_SERVER_PORT = '21345';
-$LOCAL_MACHINE_IP = 'o17';
+$LOCAL_MACHINE_IP = 'p1';
 $LOCAL_MACHINE_PORT = '12349';
 
 //Creer un socket public pour toutes requetes en provenance d'un client
@@ -229,7 +229,9 @@ while(true){
 							{
 							        $placeD = strtok('&');
 								$placePB = strtok('&');
+								$misePB = strtok('&');
 								$placeGB = strtok('&');
+								$miseGB = strtok('&');
 								$next = strtok('&');						      
 								$clients[$username]->setdealer('Deale&'.$placeD.'&'.$placePB.'&'.$placeGB.'&'.$next.'&');
 								echo "add dealer\n";
@@ -267,6 +269,13 @@ while(true){
 							        $jetons /= 100;
 						         	$clients[$username]->add_gagnant('Gagna&'.$place.'&'.$jetons.'&');
 							        break;
+							}
+					                case "Perdu":
+							{
+							        $place = strtok('&');
+								$jetons = strtok('&');
+								$jetons /= 100;
+								break;
 							}
 					                default:
 							{

@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start(); 
         
 	if(isset($_GET["num_port"]) AND isset($_GET["nb_j_max"])){
 		$nb_j_max = $_GET["nb_j_max"];
