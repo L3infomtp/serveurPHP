@@ -11,7 +11,7 @@ require_once("../../model/connection_db.php");
  Ce fichier contient ...
  ======================================================================*/ 
 
-$LOCAL_MACHINE = 'p1';
+$LOCAL_MACHINE = 'h13';
 $LOCAL_MACHINE_PORT = 12349;
 
 $socket_public = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
@@ -38,19 +38,18 @@ if($res != 'connection_denied'){
 	$tables = "";
 	while($mess != ""){
 	  echo $mess;
-	  $tables .= '
-          <tr>
-             <td>'.strtok('&').'</td>';
+	  $tables .= '<tr><td>';
+	  $nom_table = strtok('&');
+	  $tables .= $nom_table.'</td>';
 	  $num_port = strtok('&');
 	  $tables .= '
-             <td>'.strtok('&').'</td>
-             <td>';
+             <td>'.strtok('&').' / ';
 	  $nb_j_max = strtok('&');
 	  $tables .= $nb_j_max.'</td>
              <td>'.number_format(strtok('&'),2,'.',' ').'</td>
-             <td><input type="button" value="Rejoindre" onclick="javascript:rejoindreTable('.$num_port.','.$nb_j_max.')"/></td>
+             <td><input type="button" value="Rejoindre" onclick="javascript:rejoindreTable('.$num_port.','.$nb_j_max.",'".$nom_table."')\"/></td>
           </tr>
-         ';
+         ";
 	  $mess = strtok('&');
 	}	
 	$_SESSION["tables"] = $tables;

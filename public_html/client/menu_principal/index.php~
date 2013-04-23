@@ -16,8 +16,8 @@
 
 		<script type="text/javascript">
 		<!--
-                        function rejoindreTable(num_port,nb_j_max){
-                             $(location).attr('href',"/~flucia/client/table/index.php?num_port="+num_port+"&nb_j_max="+nb_j_max);	    
+                        function rejoindreTable(num_port,nb_j_max,nom_table){
+                             $(location).attr('href',"/~flucia/client/table/index.php?num_port="+num_port+"&nb_j_max="+nb_j_max+"&nom_table="+nom_table);	    
 			}
 		//-->
 		</script>
@@ -38,6 +38,7 @@
         	<div class="page">
 			<div class="wrapper">
 				<div id="menu_principal">
+		                        <div style="float:right;margin-top:25px;margin-right:25px;"><input type="button" value="Rafraichir" /></div>
 					<ul id="menu_bar">
 						<li class="menu_pseudo"><?php echo $_SESSION["username"] ?></li>
 						<li><?php echo $_SESSION["money"] ?><Li>
@@ -46,8 +47,7 @@
 						<table>
 							<tr>
 								<th>Nom Table</th>
-								<th>Nombre de joueurs</th>
-								<th>Nombre de joueurs maximum</th>
+								<th>Nombre de joueurs</th>							    
 								<th>Mise minimum</th>
 								<th></th>
 							</tr>

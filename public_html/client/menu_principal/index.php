@@ -3,8 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
     	<head>
-	      	  <title>Poker en ligne</title>
-      		  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	      	<title>Poker en ligne</title>
+      		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<link rel="stylesheet" href="/~flucia/style.css" />
 		<link rel="stylesheet" href="/~flucia/jquery-ui-1.10.2.custom/development-bundle/themes/ui-darkness/jquery.ui.all.css" />
 	
@@ -16,8 +16,8 @@
 
 		<script type="text/javascript">
 		<!--
-                        function rejoindreTable(num_port,nb_j_max){
-                             $(location).attr('href',"/~flucia/client/table/index.php?num_port="+num_port+"&nb_j_max="+nb_j_max);	    
+                        function rejoindreTable(num_port,nb_j_max,nom_table){
+                             $(location).attr('href',"/~flucia/client/table/index.php?num_port="+num_port+"&nb_j_max="+nb_j_max+"&nom_table="+nom_table);	    
 			}
 		//-->
 		</script>
@@ -47,8 +47,7 @@
 						<table>
 							<tr>
 								<th>Nom Table</th>
-								<th>Nombre de joueurs</th>
-								<th>Nombre de joueurs maximum</th>
+								<th>Nombre de joueurs</th>							    
 								<th>Mise minimum</th>
 								<th></th>
 							</tr>

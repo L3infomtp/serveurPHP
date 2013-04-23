@@ -1,36 +1,5 @@
-<?php
-    session_start(); 
-        
-if(isset($_GET["num_port"]) AND isset($_GET["nb_j_max"]) AND isset($_GET["nom_table"])){
-		$nb_j_max = $_GET["nb_j_max"];
-		$num_port = $_GET["num_port"];
-		$nom_table = $_GET["nom_table"];
-	}
 
-	function player_block($place,$nb_j_max){
-		echo '<td><div id="player'.$place.'" style="vertical-align:center;">';
-		if($place < $nb_j_max) echo '<div id="select_seat" onclick="javascript:choixPlace('.$place.')"><strong>Choisissez votre place</strong></div>';
-		echo '</div></td>';   
-	}
-?>
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
-	<head>
-        	<title>Poker en ligne</title>
-        	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<link rel="stylesheet" href="/~flucia/style.css" />
-		<link rel="stylesheet" href="/~flucia/jquery-ui-1.10.2.custom/development-bundle/themes/ui-darkness/jquery.ui.all.css" />
-	
-		<script type="text/javascript" src="/~flucia/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="/~flucia/jquery-ui-1.10.2.custom/development-bundle/ui/jquery.ui.core.js"></script>
-		<script type="text/javascript" src="/~flucia/jquery-ui-1.10.2.custom/development-bundle/ui/jquery.ui.widget.js"></script>
-		<script type="text/javascript" src="/~flucia/jquery-ui-1.10.2.custom/development-bundle/ui/jquery.ui.mouse.js"></script>
-        	<script type="text/javascript" src="/~flucia/jquery-ui-1.10.2.custom/development-bundle/ui/jquery.ui.slider.js"></script>
-        	<script type="text/javascript">
-        	
-	  // Info du joueur
+// Info du joueur
 var carte1 = "def.png";
 var carte2 = "def.png";
 var ma_place = -1;
@@ -331,7 +300,6 @@ function refresh(){
 }
 
 function miser(mise){
-	$("#relance_div").slideUp();
 	if(mise == 0){
 		ajax_mise(mise);
 	}
@@ -360,10 +328,11 @@ function miser(mise){
 					$("#valeur_relance").html($(this).slider("value"));
 				}
 			});
-			$("#relance_div").slideDown();
+			$("#relance_div").slideToggle();
 		}
 		else{
 			ajax_mise($("#slider").slider("value"));
+			$("#relance_div").slideToggle();      
 		}
 	}
 	else if(mise == -1){
@@ -383,106 +352,3 @@ function ajax_mise(mise){
 		}
 	});
 }
-
-        	</script>
-
-	</head>
-	<body onload="connexionClient()" onunload="fermetureClient();">
-
-		<script type="text/javascript">
-		<!--
-			$(document).ready(function(){
-				setInterval(function(){
-					refresh();
-				},300);
-			});
-		//-->
-		</script>
-
-		<div id="table_page">
-			<div>
-				<table>
-					<tr>
-						<td colspan="3">
-							<table class="table">
-								<tr>
-									<td></td>
-									<?php
-										for($i=0;$i<4;$i++){
-										  player_block($i,$nb_j_max);
-										}
-									?>
-									<td></td>
-								</tr>
-								<tr>
-									   
-									<?php player_block(9,$nb_j_max);?>
-									
-									<td><div class="pot_div"><span>Pot</span><br/><span class="pot"></span></div></td>
-									<td colspan="3" class="board">
-										<table id="board">
-											<tr>												   
-												<td>
-													<img src="cards/carte.png" height="90" width="60"/>
-												</td>
-												<td>
-													<img id="board1" src="cards/def.png" height="90" width="60"/>
-												</td>
-												<td>
-													<img id="board2" src="cards/def.png" height="90" width="60"/>
-												</td>
-												<td>
-													<img id="board3" src="cards/def.png" height="90" width="60"/>
-												</td>
-												<td>
-													<img id="board4" src="cards/def.png" height="90" width="60"/>
-												</td>
-												<td>
-													<img id="board5" src="cards/def.png" height="90" width="60"/>
-												</td>
-											</tr>
-										</table>
-									</td>
-									
-									<?php player_block(4,$nb_j_max); ?>
-									
-								</tr>	
-								<tr>	
-									<td></td>
-									<?php
-										for($i=8;$i>4;$i--){
-											player_block($i,$nb_j_max);
-										}
-									?>	
-									<td></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="chat">
-							
-							</div>
-						</td>
-						<td>
-							<div class="cards">
-								<div id="cards_box">
-									<img id="carte1" src="cards/def.png" height="130" width="90"/>
-								</div>
-								<div style="display:inline-block">
-									<img id="carte2" src="cards/def.png" height="130" width="90"/>
-								</div>
-							</div>
-						</td>
-						<td>
-							<div class="select">
-							
-							</div>				
-						</td>			
-					</tr>						
-				</table>		
-			</div>		
-		</div>
-	</body>
-</html>

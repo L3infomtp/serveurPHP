@@ -191,15 +191,11 @@ body{
 	border-collapse:collapse;
 }
 
-
-
 #table_page{
 	color: white;
 	width: 860px;
-	padding-left: 35px;
 	margin: auto;
-	font-family: Lucida;
-	font-size: 14px;	
+	font-family: Lucida;	
 }
 
 .table{
@@ -208,8 +204,7 @@ body{
 	width: 795px;
 	border-spacing:10px;
 	background: url("/~flucia/client/table/table.jpg") no-repeat;
-	background-position: 0px 65px;
-	margin-left:5px;
+	background-position: 28px 50px;
 }
 
 .table div{
@@ -219,36 +214,43 @@ body{
 	border-radius:5px;
 	border: outset 2px orange;
 	font-size:12px;
-	width: 110px;
-	height: 110px;
+	width: 125px;
+	height: 100px;
+}
+
+#select_seat{
+	border : none;
+	padding-top: 40px;
+	height: 60px;;
 }
 
 .table .pot_div{
+	font-size: 14px;
 	margin-left: 20px;
 	height:50px;
 	width: 70px;
 }
 
 #player_status_bar{
-	padding: 0px;
-	height: 20px;
-	width: 75px;
-	background-color: rgb(10,15,15);
-
-	
+	height: 30px;
+	width: 80px;
+	background-color:rgb(30,45,45);	
 	border: 2px inset rgb(30,35,35);
+	border-radius: 5px;
 }
 
 #timer_box{
-	padding: 0px;
-	height: 36px;
-	width: 18px;
-	background-color:rgb(10,15,15);
+	color : rgb(180,195,195);
+	font-size: 15px;
+	width: 25px;
+	background-color:rgb(30,45,45);
 	border: 2px inset rgb(30,35,35);
+	border-radius: 20px;
 }
 
 #pseudo{
-	font-size:16px;
+	font-size:14px;	
+	text-transform: capitalize;
 }
 
 #board{
@@ -257,7 +259,7 @@ body{
 
 .chat{
 	height: 150px;
-	width: 300px;
+	width: 320px;
 	background-color: rgb(20,25,25);
 	border: 2px outset black;
 }
@@ -277,7 +279,7 @@ body{
 
 .select{
 	height: 150px;
-	width: 295px;
+	width: 320px;
 	background-color: rgb(20,25,25);
 	color: black;
 	border: 2px outset black;

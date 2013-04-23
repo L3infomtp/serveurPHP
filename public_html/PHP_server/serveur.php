@@ -10,9 +10,9 @@
 
 require_once("class_client.php");
 
-$C_SERVER_IP = 'p2';
+$C_SERVER_IP = 'h14';
 $C_SERVER_PORT = '21345';
-$LOCAL_MACHINE_IP = 'p1';
+$LOCAL_MACHINE_IP = 'h13';
 $LOCAL_MACHINE_PORT = '12349';
 
 //Creer un socket public pour toutes requetes en provenance d'un client
@@ -141,7 +141,9 @@ while(true){
 							$infoM = $clients[$username]->getmise();
 							$infoB = $clients[$username]->getboard();
 							$infoG = $clients[$username]->getgagnant();
-							$infoT .= $infoJ .= $infoM .= $infoD .= $infoC .= $infoB .= $infoG;
+							$infoP = $clients[$username]->getperdant();
+							$infoQ = $clients[$username]->getjoueurQuit();
+							$infoT .= $infoJ .= $infoM .= $infoD .= $infoC .= $infoB .= $infoG .= $infoP .= $infoQ;
 							if($infoT !== ""){
 								echo $infoT."\n";
 								socket_write($new_client_socket,$infoT);
@@ -152,6 +154,8 @@ while(true){
 								$clients[$username]->setmise("");
 								$clients[$username]->setboard("");
 								$clients[$username]->setgagnant("");
+								$clients[$username]->setperdant("");
+								$clients[$username]->setjoueurQuit("");
 							}
 							else{					  
 								socket_write($new_client_socket,"RAS");
@@ -275,6 +279,13 @@ while(true){
 							        $place = strtok('&');
 								$jetons = strtok('&');
 								$jetons /= 100;
+						         	$clients[$username]->add_perdant('Perdu&'.$place.'&'.$jetons.'&');
+								break;
+							}
+					                case "JQuit" :
+					                {
+					                        $place = strtok('&');
+						         	$clients[$username]->add_joueurQuit('JQuit&'.$place.'&');
 								break;
 							}
 					                default:

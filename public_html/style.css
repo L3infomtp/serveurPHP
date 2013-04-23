@@ -191,8 +191,6 @@ body{
 	border-collapse:collapse;
 }
 
-
-
 #table_page{
 	color: white;
 	width: 860px;
@@ -220,7 +218,14 @@ body{
 	height: 100px;
 }
 
+#select_seat{
+	border : none;
+	padding-top: 40px;
+	height: 60px;;
+}
+
 .table .pot_div{
+	font-size: 14px;
 	margin-left: 20px;
 	height:50px;
 	width: 70px;
@@ -253,10 +258,28 @@ body{
 }
 
 .chat{
+	color: black;
 	height: 150px;
-	width: 320px;
-	background-color: rgb(20,25,25);
-	border: 2px outset black;
+	width: 310px;
+	margin-left: 5px;
+	border: 2px inset black;
+}
+
+#chat_box{
+	height: 120px;
+	padding: 3px;
+	background-color: rgb(230,230,230);
+	overflow-y: scroll;	
+}
+
+.message_systeme{
+	color:red;
+	font-size: 15px;
+}
+
+.message_chat_systeme{
+	font-size : 13px;
+	color: blue;
 }
 
 .cards{
@@ -274,7 +297,7 @@ body{
 
 .select{
 	height: 150px;
-	width: 320px;
+	width: 310px;
 	background-color: rgb(20,25,25);
 	color: black;
 	border: 2px outset black;

@@ -36,6 +36,7 @@ class Client{
   private $cartes;
   private $board;
   private $mise;
+  private $gagnant;
   
   public function __construct($username = "",$password = "",$socket = NULL,$money = 0,$email = "", $dob = "", $gender = "", $lname = "", $fname = "", $address = "", $city = "", $zipcode = "", $country = "",$socket_table = NULL, $info_joueurs = "", $info_table = "", $dealer = ""){
     $this->username = $username;
@@ -145,6 +146,9 @@ class Client{
   public function gettable_info(){
     return $this->table_info;
   }
+  public function getgagnant(){
+    return $this->gagnant;
+  }
 
   public function setusername($name){
     $this->username = $name;
@@ -209,6 +213,9 @@ class Client{
   public function settable_info($table){
     $this->table_info = $table;
   }
+  public function setgagnant($gagnant){
+    $this->gagnant = $gagnant;
+  }
 
   public function add_info_joueurs($mess){
     $this->info_joueurs .= $mess;
@@ -218,5 +225,8 @@ class Client{
   }
   public function add_mise($mise){
     $this->mise .= $mise;
+  }
+  public function add_gagnant($gagnant){
+    $this->gagnant .= $gagnant;
   }
 }
